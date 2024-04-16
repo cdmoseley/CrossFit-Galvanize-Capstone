@@ -28,7 +28,8 @@ MenPastOpen.csv
 Capstone/Galvanize_Capstone_Crossfit/Data/WomenPastOpen.csv
 WomenPastOpen.csv
 
-#Pre-Clean/Users/cdmoseley/dai_files/Capstone/Galvanize_Capstone_Crossfit/Data/Pre-Clean_Men_Crossfit.csv
+#Pre-Clean_Men
+Pre-Clean/Users/cdmoseley/dai_files/Capstone/Galvanize_Capstone_Crossfit/Data/Pre-Clean_Men_Crossfit.csv
 Capstone/Galvanize_Capstone_Crossfit/Data/Pre-Clean_Men_Crossfit.csv
 Pre-Clean_Men_Crossfit
 
@@ -36,3 +37,8 @@ Pre-Clean_Men_Crossfit
 /Users/cdmoseley/dai_files/Capstone/Galvanize_Capstone_Crossfit/Data/Pre_DT_Crossfit.csv
 Capstone/Galvanize_Capstone_Crossfit/Data/Pre_DT_Crossfit.csv
 Pre_DT_Crossfit.csv
+
+#Crossfit Men
+/Users/cdmoseley/dai_files/Capstone/Galvanize_Capstone_Crossfit/Data/Crossfit_Men.csv
+Capstone/Galvanize_Capstone_Crossfit/Data/Crossfit_Men.csv
+Crossfit_Men
