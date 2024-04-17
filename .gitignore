@@ -1,44 +1,49 @@
-#Women Open Leaderboard 
-/Users/cdmoseley/dai_files/Capstone/Galvanize_Capstone_Crossfit/Data/WomenOpenLeaderboard.csv
-Capstone/Galvanize_Capstone_Crossfit/Data/WomenOpenLeaderboard.csv
-WomenOpenLeaderboard.csv
-
-#Men Open Leaderboard 
-/Users/cdmoseley/dai_files/Capstone/Galvanize_Capstone_Crossfit/Data/MenOpenLeaderboard.csv
-Capstone/Galvanize_Capstone_Crossfit/Data/MenOpenLeaderboard.csv
-MenOpenLeaderboard.csv
-
-#Women Benchmarks 
-/Users/cdmoseley/dai_files/Capstone/Data/WomenBenchmarks.csv
-Capstone/Data/WomenBenchmarks.csv
-WomenBenchmarks.csv
+#Scraped_Data
 
 #Men Benchmarks 
-/Users/cdmoseley/dai_files/Capstone/Galvanize_Capstone_Crossfit/Data/MenBenchmarks.csv
-Capstone/Galvanize_Capstone_Crossfit/Data/MenBenchmarks.csv
+/Users/cdmoseley/dai_files/Capstone/Galvanize_Capstone_Crossfit/Data/Scraped_Data/MenBenchmarks.csv
+Capstone/Galvanize_Capstone_Crossfit/Data/Scraped_Data/MenBenchmarks.csv
 MenBenchmarks.csv
 
+#Men Open Leaderboard 
+/Users/cdmoseley/dai_files/Capstone/Galvanize_Capstone_Crossfit/Data/Scraped_Data/MenOpenLeaderboard.csv
+Capstone/Galvanize_Capstone_Crossfit/Data/Scraped_Data/MenOpenLeaderboard.csv
+MenOpenLeaderboard.csv
+
 #Men Past Open 
-/Users/cdmoseley/dai_files/Capstone/Galvanize_Capstone_Crossfit/Data/MenPastOpen.csv
-Capstone/Galvanize_Capstone_Crossfit/Data/MenPastOpen.csv
+/Users/cdmoseley/dai_files/Capstone/Galvanize_Capstone_Crossfit/Data/Scraped_Data/MenPastOpen.csv
+Capstone/Galvanize_Capstone_Crossfit/Data/Scraped_Data/MenPastOpen.csv
 MenPastOpen.csv
 
+#Women Benchmarks 
+/Users/cdmoseley/dai_files/Capstone/Data/Scraped_Data/WomenBenchmarks.csv
+Capstone/Data/Scraped_Data/WomenBenchmarks.csv
+WomenBenchmarks.csv
+
+#Women Open Leaderboard 
+/Users/cdmoseley/dai_files/Capstone/Galvanize_Capstone_Crossfit/Data/Scraped_Data/WomenOpenLeaderboard.csv
+Capstone/Galvanize_Capstone_Crossfit/Data/Scraped_Data/WomenOpenLeaderboard.csv
+WomenOpenLeaderboard.csv
+
 #Women Past Open 
-/Users/cdmoseley/dai_files/Capstone/Galvanize_Capstone_Crossfit/Data/WomenPastOpen.csv
-Capstone/Galvanize_Capstone_Crossfit/Data/WomenPastOpen.csv
+/Users/cdmoseley/dai_files/Capstone/Galvanize_Capstone_Crossfit/Data/Scraped_Data/WomenPastOpen.csv
+Capstone/Galvanize_Capstone_Crossfit/Data/Scraped_Data/WomenPastOpen.csv
 WomenPastOpen.csv
 
-#Pre-Clean_Men
-Pre-Clean/Users/cdmoseley/dai_files/Capstone/Galvanize_Capstone_Crossfit/Data/Pre-Clean_Men_Crossfit.csv
-Capstone/Galvanize_Capstone_Crossfit/Data/Pre-Clean_Men_Crossfit.csv
-Pre-Clean_Men_Crossfit
-
+#Cleaning Data
 #Pre_DT_Crossfit.csv
-/Users/cdmoseley/dai_files/Capstone/Galvanize_Capstone_Crossfit/Data/Pre_DT_Crossfit.csv
-Capstone/Galvanize_Capstone_Crossfit/Data/Pre_DT_Crossfit.csv
+/Users/cdmoseley/dai_files/Capstone/Galvanize_Capstone_Crossfit/Data/Cleaning_Data/Pre_DT_Crossfit.csv
+Capstone/Galvanize_Capstone_Crossfit/Data/Cleaning_Data/Pre_DT_Crossfit.csv
 Pre_DT_Crossfit.csv
 
+#Pre-Clean_Men
+Pre-Clean/Users/cdmoseley/dai_files/Capstone/Galvanize_Capstone_Crossfit/Data/Cleanining_Data/Pre-Clean_Men_Crossfit.csv
+Capstone/Galvanize_Capstone_Crossfit/Data/Cleanining_Data/Pre-Clean_Men_Crossfit.csv
+Pre-Clean_Men_Crossfit
+
+#Analysis Data
+
 #Crossfit Men
-/Users/cdmoseley/dai_files/Capstone/Galvanize_Capstone_Crossfit/Data/Crossfit_Men.csv
-Capstone/Galvanize_Capstone_Crossfit/Data/Crossfit_Men.csv
+/Users/cdmoseley/dai_files/Capstone/Galvanize_Capstone_Crossfit/Data/Analysis_Data/Crossfit_Men.csv
+Capstone/Galvanize_Capstone_Crossfit/Data/Analysis_Data/Crossfit_Men.csv
 Crossfit_Men
