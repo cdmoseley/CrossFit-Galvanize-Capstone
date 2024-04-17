@@ -36,10 +36,20 @@ WomenPastOpen.csv
 Capstone/Galvanize_Capstone_Crossfit/Data/Cleaning_Data/Pre_DT_Crossfit.csv
 Pre_DT_Crossfit.csv
 
+#Pre_DT_Women
+/Users/cdmoseley/dai_files/Capstone/Galvanize_Capstone_Crossfit/Data/Cleaning_Data/Pre_DT_Women_Crossfit.csv
+Capstone/Galvanize_Capstone_Crossfit/Data/Cleaning_Data/Pre_DT_Women_Crossfit.csv
+Pre_DT_Women_Crossfit.csv
+
 #Pre-Clean_Men
 Pre-Clean/Users/cdmoseley/dai_files/Capstone/Galvanize_Capstone_Crossfit/Data/Cleanining_Data/Pre-Clean_Men_Crossfit.csv
 Capstone/Galvanize_Capstone_Crossfit/Data/Cleanining_Data/Pre-Clean_Men_Crossfit.csv
 Pre-Clean_Men_Crossfit
+
+#Pre-Clean Women 
+/Users/cdmoseley/dai_files/Capstone/Galvanize_Capstone_Crossfit/Data/Cleaning_Data/Pre-Clean_Women_Crossfit.csv
+Capstone/Galvanize_Capstone_Crossfit/Data/Cleaning_Data/Pre-Clean_Women_Crossfit.csv
+Pre-Clean_Women_Crossfit
 
 #Analysis Data
 
@@ -47,3 +57,8 @@ Pre-Clean_Men_Crossfit
 /Users/cdmoseley/dai_files/Capstone/Galvanize_Capstone_Crossfit/Data/Analysis_Data/Crossfit_Men.csv
 Capstone/Galvanize_Capstone_Crossfit/Data/Analysis_Data/Crossfit_Men.csv
 Crossfit_Men
+
+#Crossfit Women 
+/Users/cdmoseley/dai_files/Capstone/Galvanize_Capstone_Crossfit/Data/Analysis_Data/Crossfit_Women.csv
+Capstone/Galvanize_Capstone_Crossfit/Data/Analysis_Data/Crossfit_Women.csv
+Crossfit_Women.csv
