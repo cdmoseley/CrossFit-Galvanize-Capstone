@@ -1,9 +1,49 @@
-Ideas for Objectives: 
-Athlete Stats
-Age
-Sex
-Height
-Weight
+OBJECTIVES: 
+
+- Stats for Athletes particpation   
+   - Age, height, weight 
+   - Where did these athletes come from (heatmap) 
+- Does BMI matter more as we age? 
+- Does consistency across the three events improve results? 
+- Between what years of doing CrossFit do we see the highest growth increase in Open Score? -> Adjust for the number of athletes that participated each year (%)
+- The performance of different prediction models with CF test data and open benchmark stats 
+   -Random Forest and Multiple Linear Regression 
+   -Feature Importance (Random Forest, XGBoost, AdaBoost)
+
+1. GET THE STATES FOR EVERY CATEGORY 
+#PROFILES MALE AND FEMALE
+
+   a. Age: count gender, mean age, std., min age, 25% age, 50% age 75% age, max age 
+
+   -Overlay age of male and female onto each other
+
+   b. Height: Count gender, mean height, std. height, min height. 25% height, 50% height, 75% height, max height 
+
+   -Overlay of height male and female onto each other
+
+   c. Weight: count gender, mean weight, std., min weight, 25% weight, 50% weight, 75% weigth, max weight 
+
+   d. Number of athletes and where they came from (Heatmap of the world) 
+
+-Overlay of weight male and female to each other
+
+* SEE LEBLANC EXAMPLE AND SAM EXAMPLE*
+
+3. Score variability vs. overall finish 
+
+4. Score in Younger Athletes as BMI goes up vs. Older Athletes: Based on survey responses, older athlets (35+) were more careful with their diets and were even less likely to perform well with a higher BMI Index. The lesson here is that while BMI is critical in all age groups, it getes more important with age to stay relatively lean. 
+
+4. The performance of different prediction models for CF test data w/ benchmark stats.
+   a. Random Forest and Multiple Linear Regression 
+      i. The performance in the Open 
+      ii. Weightlifting Categories 
+
+   b. Feature Importances w/ Random Forest, XGBoost, AdaBoost, Mean 
+      i. The performance in the open 
+      ii. Deadlift 
+      iii. 5k run
+   
+   c. Is there a competitive benefit to focusing on cardio or weightlifting, both of which feature in the Crossfit Program? 
 
 Weightlifting
 Back Squat
@@ -22,11 +62,7 @@ Running Exercices
 Sprint 400m
 Run 5k
 
-Split it into these categories
-
 Sam Swift Take that and post on Medium
-
-BMI, Height, Age as predictors of overall performance and then performance in each of the workouts 
 
 24.1
 Dumbbel Snatches and Burpees
@@ -41,44 +77,15 @@ Thruster
 C2B 
 Muscle Up 
 
-Structure 
-Introduction to Crossfit 
-How I got my data 
- -Webscraping, but not showing how I did it to protect others 
-- Leaderboard pages, athlete pages 
-
-GET THE STATES FOR EVERY CATEGORY 
-#PROFILES MALE AND FEMALE
-#AVERAGE
-#5TH PERCENTILE
-#25th PERCENTILE
-#50TH PERCENTILE
-#75th PERCENTILE 
-#95th PERCENTILE
-
--Overlay age of male and female onto each other
--Overlay of height male and female onto each other
--Overlay of weight male and female to each other
--Visualize Count of athletes men and women 
--Count of box and what country that box was in 
--Correlation of all the factors to each other 
--General physic of athletes (height and weight) 
--Number of athletes and where they came from 
--Rlationship of the exercise 
--Visualize Age density and where most ages are located 
--Score variability vs. overall finish 
-
-
 Conclusions and next steps 
 -Create a Kaggle dataset
 -Create some kind of API that will use this data to give training advices
 -Maybe add regional and games data 
 
--Is there a competitive benefit to focusing on cardio or weightlifting, both of which feature in the Crossfit Program? 
+
 -What is the impact of BMI on different types of activities? 
 -What is the impact of age or gender 
 
-Older Athletes: Based on survey responses, older athlets (35+) were more careful with their diets and were even less likely to perform well with a higher BMI Index. The lesson here is that while BMI is critical in all age groups, it getes more important with age to stay relatively lean. 
 
 -Wish I had more data on the number of workouts per week 
 
@@ -94,3 +101,5 @@ H2F
 -Highest in one category is 1,294 entries and then 152 entries
 
 ACFT Leaderboard 
+
+Adjust Rank by year to accomodate for how many athletes participated that year 
