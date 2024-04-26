@@ -1,31 +1,35 @@
+OVERALL QUESTION TRYING TO HIT: 
+
+
+
 OBJECTIVES: 
 
-- Stats for Athletes particpation   
-   - Age, height, weight 
-   - Where did these athletes come from (heatmap) 
+- Stats for Athletes participation   
+   - Age, height, weight (distribution and numbers)
+   - Where did these athletes come from (heatmap)? 
+   - Maybe a pin of all the crossfit gyms that participated in the US
 - Does BMI matter more as we age? 
-- Does consistency across the three events improve results? 
-- Between what years of doing CrossFit do we see the highest growth increase in Open Score? -> Adjust for the number of athletes that participated each year (%)
+- Between what years of doing CrossFit do we see the highest growth increase in Open Score and is there a statistical difference? -> Adjust for the number of athletes that participated each year (%)
 - The performance of different prediction models with CF test data and open benchmark stats 
    -Random Forest and Multiple Linear Regression 
    -Feature Importance (Random Forest, XGBoost, AdaBoost)
+
+- Does consistency across the three events improve results? 
 
 1. GET THE STATES FOR EVERY CATEGORY 
 #PROFILES MALE AND FEMALE
 
    a. Age: count gender, mean age, std., min age, 25% age, 50% age 75% age, max age 
-
    -Overlay age of male and female onto each other
 
    b. Height: Count gender, mean height, std. height, min height. 25% height, 50% height, 75% height, max height 
-
    -Overlay of height male and female onto each other
 
    c. Weight: count gender, mean weight, std., min weight, 25% weight, 50% weight, 75% weigth, max weight 
+   -Overlay of weight male and female to each other
 
    d. Number of athletes and where they came from (Heatmap of the world) 
 
--Overlay of weight male and female to each other
 
 * SEE LEBLANC EXAMPLE AND SAM EXAMPLE*
 
