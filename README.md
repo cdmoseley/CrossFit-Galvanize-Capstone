@@ -1,183 +1,196 @@
-# Introduction
-In January of 2023, I was introduced to the idea of collecting data to improve Army Fitness when the Data Warfare Company from Fort Liberty came to Fort Stewart to institute a readiness and lethality study. This study is currently on-going and consists of a one-day course where trainers teach functional movements and general nutrition as well as introducing soldiers to their programming. 
+# CrossFit Open → Quarterfinals Predictors (Galvanize Capstone)
 
-In this analysis, I leveraged multiple machine learning algorithms to analyze the 2024 CrossFit Open Data with the goal of providing insights that can help the hired fitness professionals further structure and prepare their programming. This program is still in the early stages of its implementation, so I sought out to see if there was anything that data shows that could assist as the Army continues to tackle H2F initiatives. 
+**Predicting Quarterfinals qualification from 2024 CrossFit Open leaderboard + athlete benchmark PRs,** with recommendations for Army Holistic Health and Fitness (H2F) programming.
 
-# What is the CrossFit Open? 
-So what is the CrossFit Open? 
+| | |
+|---|---|
+| **Role** | End-to-end data project: scrape → clean → EDA → hypothesis tests → ML |
+| **Outcome** | Logistic regression ~80% test accuracy predicting Top 25% / Quarterfinals (80/20 split) |
+| **Key finding** | Clean & Jerk and Snatch consistently rank among top performance predictors (men & women) |
+| **Stack** | Python, pandas, BeautifulSoup/aiohttp, scikit-learn, XGBoost, SciPy, Folium |
+| **Artifacts** | Notebooks · cleaned CSVs · [US affiliate map](./crossfit_affiliates_with_stats_bold.html) |
 
-The idea was built around the Hopper Model for fitness, which is the idea that he or she who is fittest would be able to perform well at any random physical task that might present itself. The current structure is that over the course of three weeks, individuals complete three workouts and submit their scores to be ranked against other athletes worldwide.
+---
 
-While the purpose of the Open is to find the fittest athletes in each region to move on to the next stage of the competition, many just use the Open is a way to check in on their fitness, staying motivated for the upcoming year, accomplish personal goals, and celebrate with the community of CrossFit. So summarizing the workouts from this year: 24.1 consisted of a whole bunch of dumbbell snatches and burpees over the dumbbell, 24.2 was a workout to complete as many rounds as possible in 20 minutes of a row, deadlifts, and double-unders with a jump rope, and 24.3 was a whole bunch of barbell thrusters, pull-ups, and even muscle-ups if you made it to that point in the workout. 
+## Demo
 
-# About the Dataset 
-So, why did I choose to analyze the CrossFit Open?
+- **Interactive map:** [US CrossFit affiliates with summary stats](./crossfit_affiliates_with_stats_bold.html) — open in a browser to explore affiliate locations and baseline statistics.
+- **Key charts** (hosted assets from the original capstone write-up):
 
-First, if you actually look at the workout programming this H2F study is instituting, it strongly mimics the type workout you will see in a CrossFit gym (minus the handstand walks & muscle-ups) 	
+<p align="center">
+  <img width="435" alt="2024 Open athlete gender split: about 55% men and 45% women" src="https://github.com/cdmoseley/Galvanize_Capstone_Crossfit/assets/161170070/e6919c2c-7331-4176-9cb6-7ee14ce6e703">
+  <img width="447" alt="Regional mix of Open athletes: North America largest, then Europe and South America" src="https://github.com/cdmoseley/Galvanize_Capstone_Crossfit/assets/161170070/f52c566a-37d8-4e4d-ad21-f2296d580775">
+</p>
 
-And second, CrossFit deeply has its roots with the military using this type of programming – Law enforcement, firefighters and Military were among the first to use these type of workouts for training. 
+*Figure: Open participation by gender and region (~300,000+ athletes; North America–heavy).*
 
-That being said, the biggest reason is for two words: DATA COLLECTION. Sharing scores is an engrained part of the CrossFit culture, even down to writing daily workout scores on the affiliate whiteboard. This provides folks with an additional layer of accountability, shared commitment to the Workout of the Day, and in my case, a lot of data to analyze. 
+<p align="center">
+  <img width="440" alt="XGBoost feature importance: Clean and Jerk and Snatch among top predictors for men" src="https://github.com/cdmoseley/Galvanize_Capstone_Crossfit/assets/161170070/032996b1-1be9-4dd4-8a85-9239189b1124">
+</p>
 
-To be clear, the Army does not need to become the world’s biggest CrossFit affiliate. But there are lessons and practices that the CrossFit community has learned and refined that could be easily integrated into the Army’s new fitness culture.
+*Figure: XGBoost feature importance — Olympic lifts again near the top of the ranking.*
 
-I will say I considered doing analysis on the H2F study workout scores, as they have data available for download of all the test scores, however, in my opinion, there isn't currently enough input yet to be able to really provide insightful and lasting conclusions. I do, however, expect to see useable data for great analysis here shortly as the popularity and interactions with the initiative grows and service members complete more tests.
+<p align="center">
+  <img width="307" alt="Modeled Quarterfinals probability near mean benchmarks about 22 percent" src="https://github.com/cdmoseley/Galvanize_Capstone_Crossfit/assets/161170070/bbc956e7-293b-4771-8e25-0ae3d0927ac7">
+  <img width="333" alt="Modeled Quarterfinals probability at 75th percentile benchmarks about 83 percent" src="https://github.com/cdmoseley/Galvanize_Capstone_Crossfit/assets/161170070/bb404f80-e615-4fdd-aa47-639384cea2a2">
+</p>
 
-Unfortunately, the data for the CrossFit Open was not easily available for download, so I built a web-scraper in Python that downloaded all of the 2024 Open Leaderboard Scores as well as the associated Athlete Profiles into a useable format. 
+*Figure: Logistic scenarios — mean benchmarks ≈ 22% modeled Quarterfinals probability; 75th percentile across benchmarks ≈ 83%.*
 
-The Open Leaderboard had mainly generic information about the Open – Mainly the athlete’s Overall ranking and associated scores in the each of the workouts. 
+---
 
-However, the athlete profiles had a lot of information that I was able to associate with their performance, including biometric information such as Age, Weight, Gender, and Height, but also their self-inputted Benchmark Personnel Records.
+## Motivation
 
-I will quickly note that I do perceive there to be a skewness in the data due to the fact that all data points besides the validated Open scores by judges were self-inputted, but since this is the same approach that the study is taking to collect their data points for tests, and since there was such a large amount of input in both Men and Women, I concluded that there is still meaningful insights to be pulled out of this data. 
+In January 2023, the Data Warfare Company from Fort Liberty visited Fort Stewart for a readiness and lethality study tied to Army Holistic Health and Fitness (H2F). That work is still early: trainers introduce functional movements and nutrition, and the program continues to grow.
 
-# Athlete Representation 
-<img width="435" alt="image" src="https://github.com/cdmoseley/Galvanize_Capstone_Crossfit/assets/161170070/e6919c2c-7331-4176-9cb6-7ee14ce6e703">
+I analyzed 2024 CrossFit Open data because H2F-style programming already looks a lot like CrossFit (minus specialty gymnastics), CrossFit has deep roots with military and first responders, and — uniquely — **sharing scores is built into the culture**. Scores on the whiteboard and the Games app create a large observational dataset you can actually scrape and model.
 
-<img width="447" alt="image" src="https://github.com/cdmoseley/Galvanize_Capstone_Crossfit/assets/161170070/f52c566a-37d8-4e4d-ad21-f2296d580775">
+The Army does not need to become the world’s biggest CrossFit affiliate. The goal is transferable lessons: which capacity markers associate with high overall performance, and how that thinking can inform programming while H2F’s own longitudinal data matures.
 
-This year, there were just over 300,000 athletes represented in the CrossFit Open, with about 55% being men and 45% women. 
+---
 
-Looking across the regions, North America makes up the bulk of the Athletes, trailed by Europe and then South America. 
+## Data
 
-Here is some initial analysis I conducted for each of the CrossFit affiliates. Here, I plotted the location of each affiliate in the United States and just some baseline statistics for each as I began conducting my initial exploration. 
+**Source.** 2024 CrossFit Open leaderboard scores plus linked athlete profiles, collected with a custom Python scraper (`Crossfit_Webscrape.ipynb`). CrossFit data is used here for personal / educational analysis only.
 
-# Athlete Biometric Identifiers 
-There were three main Biometric Identifiers in this dataset and I used height and weight to generate a fourth, BMI. 
+**Leaderboard fields.** Overall ranking and per-workout ranks/scores for Open workouts 24.1–24.3.
 
-Looking at Age, the mean age for Males and Females was around the same age, 35. 
+**Profile fields.** Age, height, weight, gender, region/affiliate, and self-reported benchmark Personal Records (lifts, Fran, 5K, etc.). BMI is derived from height and weight.
 
-For weight, males had a higher weight on average coming in around 187 lbs and women 142 lbs. For Height men also coming in slightly taller at 5’ 10” vs the women at 5’ 5”. 
+**Scale.** Just over 300,000 athletes competed in the Open (~55% men / ~45% women). Analysis-ready tables in this repo:
 
-Although the mean age was a little higher than the mean Age of soldiers in the Army, I was pleased with the distributions between men and women because the normalcy of the biometric identifiers, especially in height and weight, is quite similar to the Army distribution. 
+| File | Rows (approx.) | Notes |
+|---|---|---|
+| `Data/Analysis_Data/Crossfit_Men.csv` | 176,260 | Primary modeling set used in the logistic / XGBoost notebooks |
+| `Data/Cleaning_Data/Pre-Clean_Men_Crossfit.csv` | 176,260 | Pre-clean men’s extract |
+| `Data/Cleaning_Data/Pre-Clean_Women_Crossfit.csv` | 124,958 | Pre-clean women’s extract |
+| `Data/Analysis_Data/Victory_*.xlsx` | small | Supporting workbook artifacts |
 
-# Body Mass Index (BMI) and Performance 
-Body Mass Index (or BMI for short) is just a measure used to assess an individual’s body weight relative to their height. It is a commonly used screening tool to categorize individuals into different weight categories, such as underweight, normal weight, over weight, and obese. 
+Women’s parallel analysis lives in the notebooks; a separate `Crossfit_Women.csv` analysis export may need to be regenerated from the cleaning notebook if not present locally.
 
-Looking at men’s BMI, the Bulk of the men’s BMI participating in the Open falls into the 25-30 category, which BMI would actually classify as overweight. For reference, a 5’ 11” man who weighs 190 lbs has a BMI of 26.5.
+**Caveat (important).** Validated Open scores are judged; biometric and benchmark PR fields are **self-reported**, so selection and measurement bias apply. With large *n* for both men and women, the patterns are still useful — but they are observational, not causal.
 
-Looking at the Men BMI Rankings Chart at the Bottom: The Category Rank column is the highest average across all of the Benchmark Scores. Overall the 25-30 category performed the best in the benchmarks and the Overall Open. 
+---
 
-However, as expected, the heavier BMI athletes were able to back squat and deadlift more while the lighter athletes in the 20-25 range had the fastest 5k and sprint times. 
+## Methods
 
-So based on initial results, it appears that the closer and athlete gets to the mean BMI (around 27 for men), the higher they perform overall, but you can tailor your BMI to either lift heavier or run faster if that is your target goal. 
+1. **Target.** Binary label: athlete in the **Top 25%** overall (2024 Quarterfinals cutoff).
+2. **Features.** Age / height / weight / BMI plus self-reported benchmark PRs (Back Squat, Deadlift, Clean & Jerk, Snatch, Fran, 5K, and related benchmarks).
+3. **EDA.** Regional mix; biometric distributions vs Army-relevant ranges; BMI bands vs lift and run performance.
+4. **Four complementary views of “what predicts excellence”:**
+   - Among athletes in the top 5% on a given benchmark, what % reached Quarterfinals?
+   - Hypothesis tests comparing Open rank for top 25% vs bottom 75% on each benchmark
+   - XGBoost feature importance
+   - Logistic regression coefficients + predicted-probability scenarios
+5. **Model detail (logistic).** Benchmark features only; mean imputation; `StandardScaler`; `train_test_split` **80/20**, `random_state=42`. ROC curve is plotted in the notebook; headline metric reported below is held-out accuracy.
 
-That being said, much more research is needed. BMI doesn’t directly measure body fat and doesn’t account for factors such as muscle mass and bone density, so it may not be an accurate indicator of health for everyone, especially for athletes with a lot of muscle mass. 
+---
 
-# Athlete Benchmark Identifiers 
+## Results
 
-<img width="497" alt="Screenshot 2024-05-01 at 2 42 46 PM" src="https://github.com/cdmoseley/Galvanize_Capstone_Crossfit/assets/161170070/debdb4c5-16b1-435e-b46f-a60404a6e04a">
+- **Convergent signal.** Clean & Jerk, Snatch (± Deadlift) rose to the top across the %→Quarterfinals view, hypothesis tests, XGBoost importance, and logistic coefficients for both men and women.
+- **Secondary predictors.** Fran and the 5K run also ranked highly in the ML models.
+- **Model.** Logistic regression predicting Quarterfinals (Top 25%) — **~80% training / ~80% test accuracy** on the men’s analysis set (README narrative previously cited ~78%; notebook outputs are ~0.80).
+- **Scenarios.** Mean benchmarks ≈ **22%** modeled Quarterfinals probability; **75th percentile** across benchmarks ≈ **83%**. Average scores above roughly the **58th percentile** across benchmarks → >50% modeled chance; above roughly the **71st percentile** → >75% modeled chance.
+- **BMI (exploratory).** Men near mean BMI (~27) associated with stronger overall ranks; heavier athletes stronger on squat/deadlift, lighter faster on runs. **BMI ≠ body composition** — needs body-fat data before strong claims.
 
-# Benchmark Ranking 
-Looking at Benchmark Athlete Performances, I wanted to see which exercise was the most indicative of overall performance. In total, I conducted four tests to look at this problem from a variety of angles and to see if outputs were similar. 
+<p align="center">
+  <img width="149" alt="Share of top 5 percent performers on each benchmark who reached Quarterfinals, men" src="https://github.com/cdmoseley/Galvanize_Capstone_Crossfit/assets/161170070/71ae6d4b-3fbf-4a98-9672-569f98495e3f">
+  <img width="157" alt="Share of top 5 percent performers on each benchmark who reached Quarterfinals, women" src="https://github.com/cdmoseley/Galvanize_Capstone_Crossfit/assets/161170070/242d6a5a-a848-455f-8e86-4b4d76487887">
+</p>
 
-All of the tests were performed to find the goal of which feature was most likely to put an Athlete in the Top 25%. The reason I looked at the Top 25% was for two reasons: 1. This shows excellence in overall performance 
-2. This year, the Top 25% was the percentage of athletes that made it to the next round of the games – the Quarter Finals
+*Figure: Top-5% benchmark → Quarterfinals conversion (sensitive to who logged a PR for that lift).*
 
-## Top 5% Benchmark Percentage 
-<img width="149" alt="image" src="https://github.com/cdmoseley/Galvanize_Capstone_Crossfit/assets/161170070/71ae6d4b-3fbf-4a98-9672-569f98495e3f">
+<p align="center">
+  <img width="322" alt="Hypothesis-test ranking of benchmarks by Open-rank separation, men" src="https://github.com/cdmoseley/Galvanize_Capstone_Crossfit/assets/161170070/6db4ebde-d80a-44e2-ad56-a144a73d6109">
+  <img width="329" alt="Hypothesis-test ranking of benchmarks by Open-rank separation, women" src="https://github.com/cdmoseley/Galvanize_Capstone_Crossfit/assets/161170070/c0a03339-5290-497a-922d-c6d362c78e28">
+</p>
 
-<img width="157" alt="image" src="https://github.com/cdmoseley/Galvanize_Capstone_Crossfit/assets/161170070/242d6a5a-a848-455f-8e86-4b4d76487887">
+*Figure: Hypothesis-test rankings — Clean & Jerk / Snatch / Deadlift lead for men and women.*
 
-Looking at the percentage chart, the first test I conducted was.... for the top 5% of performances in a particular exercise, what percent of those Athletes made it to Quarter Finals? This is a good initial representation, but out of the three tests, is probably the least predictive because it takes into account the bias of whether or not Athletes inputted a PR for that particular exercise. 
+<p align="center">
+  <img width="476" alt="Logistic regression coefficients highlighting Olympic lifts, Fran, and 5K" src="https://github.com/cdmoseley/Galvanize_Capstone_Crossfit/assets/161170070/76119c1d-5704-4e33-afe5-6314f6d37f26">
+</p>
 
-## Hypothesis Tests
-<img width="322" alt="image" src="https://github.com/cdmoseley/Galvanize_Capstone_Crossfit/assets/161170070/6db4ebde-d80a-44e2-ad56-a144a73d6109">
+*Figure: Logistic coefficients — Olympic lifts again among the largest effects; Fran and 5K also matter.*
 
-<img width="329" alt="image" src="https://github.com/cdmoseley/Galvanize_Capstone_Crossfit/assets/161170070/c0a03339-5290-497a-922d-c6d362c78e28">
+<p align="center">
+  <img width="497" alt="Athlete benchmark Personal Records distributions used as model features" src="https://github.com/cdmoseley/Galvanize_Capstone_Crossfit/assets/161170070/debdb4c5-16b1-435e-b46f-a60404a6e04a">
+</p>
 
-The next test, represented by the bar charts, was a hypothesis test. In this test, I wanted to see if the Overall Rank in the CrossFit Open for the Top 25% of performances in an exercise was significantly different than the Overall Rank for the Bottom 75% and then I ranked each Exercise according to how significantly different each one was. 
+*Figure: Benchmark Personal Record identifiers used as features.*
 
-Looking at both tests.......The Clean and Jerk, Snatch, and the Deadlift appear to be the top predictors of Overall Performance for men and women across both of these tests. 
+---
 
-## XGBoost Feature Importance 
-<img width="440" alt="image" src="https://github.com/cdmoseley/Galvanize_Capstone_Crossfit/assets/161170070/032996b1-1be9-4dd4-8a85-9239189b1124">
+## Recommendations & limitations
 
-Extreme Gradient Boosting is a popular machine learning algorithm known for its efficiency in handling structured data with labels and feature importance refers to a technique used in this method to determine the contribution of each feature in the model’s decision-making process. Essentially, it measures how much each feature influences the predictions made by the model. 
+**Data-informed suggestions for programming discussion — not medical, coaching certification, or Army doctrine.**
 
-## Logistic Regression 
-<img width="476" alt="image" src="https://github.com/cdmoseley/Galvanize_Capstone_Crossfit/assets/161170070/76119c1d-5704-4e33-afe5-6314f6d37f26">
+1. **Olympic lifts (Clean & Jerk / Snatch)** are the strongest recurring predictors. Prefer adding them only with trained coaching; otherwise use lower-skill power alternatives (DB clean & press, DB snatch, kettlebell swing, med-ball clean, overhead press).
+2. **Supplement with Barbell Thrusters (Fran), Deadlift, and 5K running** — also high-signal in the models and aligned with many H2F-style templates.
+3. **BMI near the male Open mean (~27)** tracked with better overall ranks in this sample, but treat as exploratory until body-fat % (or better composition metrics) exist.
+4. For CrossFit athletes tracking Games-app percentiles: staying above roughly the **58th percentile** across benchmarks was associated with a >50% modeled Quarterfinals chance in this logistic setup.
 
-Logistic Regression is a statistical model used for binary classification tasks where the target variable (in this case whether or not an Athlete made it to quarterfinals) has only two possible outcomes or classes. 
+**Limitations.** Self-reported PRs; missingness / who chooses to log a lift; observational associations only; Top-25% is a large minority class — accuracy alone is a soft metric (precision/recall/F1 and a majority-class baseline would strengthen follow-up work); women’s analysis CSV may need regeneration from cleaning notebooks.
 
-Using both of these models, I was able to determine the features from each that had the highest impact on the outcome of the Model. 
+---
 
-Across both, the Olympic Lifts of Clean and Jerk and Snatch were once again among the highest constant predictors in the models, with deadlift actually slightly trailing in these two models. 
+## Tech stack
 
-However, in both of these, Fran (Which for quick references is a 21-15-9 complex of Barbell Thrusters (squatting to the floor and pushing a barbell over your head) and pullups) and the 5k Run arose as important predictors of Overall Performance. 
+- **Language:** Python 3.11 (developed in Anaconda / Jupyter)
+- **Data:** pandas, numpy, openpyxl
+- **Scraping:** BeautifulSoup, requests, aiohttp, tqdm
+- **Stats / ML:** SciPy, scikit-learn, XGBoost
+- **Viz / maps:** matplotlib, seaborn, Folium, geopandas, shapely
 
-# What are the Chances of Making it to QuarterFinals? 
-<img width="307" alt="image" src="https://github.com/cdmoseley/Galvanize_Capstone_Crossfit/assets/161170070/bbc956e7-293b-4771-8e25-0ae3d0927ac7">
+---
 
-<img width="333" alt="image" src="https://github.com/cdmoseley/Galvanize_Capstone_Crossfit/assets/161170070/bb404f80-e615-4fdd-aa47-639384cea2a2">
+## Project structure
 
-<img width="307" alt="image" src="https://github.com/cdmoseley/Galvanize_Capstone_Crossfit/assets/161170070/6fe8f981-ef39-45ff-a8b9-5d77edfab59d">
+```text
+.
+├── Crossfit_Webscrape.ipynb              # Scrape Open leaderboard + athlete profiles
+├── Female_Cleaning.ipynb                 # Clean / join women’s extracts → analysis-ready tables
+├── Crossfit_Analysis.ipynb               # EDA, tests, XGBoost, logistic scenarios, Folium map
+├── crossfit_affiliates_with_stats_bold.html  # Interactive US affiliate map (demo)
+├── Data/
+│   ├── Cleaning_Data/                    # Pre-clean men’s & women’s CSVs
+│   └── Analysis_Data/                    # Analysis CSVs + Victory workbooks
+├── requirements.txt
+└── README.md
+```
 
-<img width="311" alt="image" src="https://github.com/cdmoseley/Galvanize_Capstone_Crossfit/assets/161170070/b16ce3aa-7b3b-4648-8517-4993eb8c9515">
+---
 
-Then, using the Logistic Regression mentioned in the previous slide, I built a model with that achieved a 78% accuracy of predicting whether an Athlete will make to Quarter Finals.
+## Setup
 
-While this was specifically tailored for the CrossFit games, my thought process was that if you can semi-accurately predict CrossFit, where the benchmark tests change every year, you can even better predict scores on the ACFT, or similar standardized tests in the Army. 
+```bash
+git clone https://github.com/cdmoseley/CrossFit-Galvanize-Capstone.git
+cd CrossFit-Galvanize-Capstone
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+```
 
-Looking at this slide, if an Athlete's output was the mean scores for each benchmark exercise, they only have a 22% chance of making it to Quarterfinals, but if they are in the 75th percentile across all benchmark exercises, they have an 83% chance of making it to quarterfinals. 
+**Recommended run order**
 
-Looking at the Hypothetical scores, I said.. if I kept everything the same as the mean scores for Fight Gone Bad and Down on the Chart (so the CrossFit workouts and the sprint) about how much would each weight lift and 5k run need to improve by to get to a 75% chance of making the games? 
+1. `Crossfit_Webscrape.ipynb` — scrape leaderboard + profiles *(optional / large; raw scraped files are gitignored)*
+2. `Female_Cleaning.ipynb` — produce analysis-ready women’s CSVs (men’s parallel cleaning lives in the analysis workflow / pre-clean extracts)
+3. `Crossfit_Analysis.ipynb` — EDA, hypothesis tests, XGBoost, logistic regression
+4. Open `crossfit_affiliates_with_stats_bold.html` in a browser for the US affiliate map
 
-While these numbers could be increased or decreased in some areas to achieve the same result, a hypothetical scenario is that your back squat would need to improve by 51 lbs, deadlift by 75 lbs, clean and jerk by 64 lbs, the snatch by 45 lbs, and the 5k run time decreased by 3 min. and 37 sec to get to a 20 min 5k. 
+**Data included:** `Data/Analysis_Data/Crossfit_Men.csv`, Victory workbooks, and pre-clean CSVs under `Data/Cleaning_Data/`. Paths inside notebooks may still point at a local Mac absolute path — update to relative `Data/...` paths when re-running.
 
-# Summarized Findings
-<img width="346" alt="image" src="https://github.com/cdmoseley/Galvanize_Capstone_Crossfit/assets/161170070/ebe04cc4-307a-4a75-8051-124269fe85d6">
+---
 
-## Overall 
-1. Olympic Lifts (Clean and Jerk / Snatch) seem to be the highest predictors of performance in both Men and Women 
-A. Risk of Injury? 
-B. Alternate power related exercises 
+## Future work
 
-2. Recommend supplementing workouts with Barbell Thrusters (Fran), Deadlifting, and the 5k Run for the greatest results 
+- Re-run the pipeline on H2F / unit test data once sample sizes support stable conclusions
+- Add body-fat % (or better composition measures) before leaning on BMI findings
+- Study transfer from these Open/benchmark predictors to ACFT (or similar standardized military tests), with clearer class-balance metrics (F1, ROC-AUC, baselines)
 
-3. BMI’s closer the mean appears to have the highest correlation with overall performance, but further study needed to gain more insight (especially without any information on Body Fat %) 
+---
 
-4. For CrossFit Athletes: To achieve a greater than 50% chance of making it to Quarter Finals, you need average scores above the 58h percentile across all benchmark stats
+## Author
 
-## Deep Dive 
-So to summarize my findings: 
-
-The Olympic Lifts of Clean and Jerk and the Snatch appear to be the best predictors of Overall Performance in both Men and Women. Normally, this would mean that I automatically recommend to include more of these types of exercises in daily programming, however an important factor to consider is the technicality of these movements and the risk of injury. I think these workouts can be incorporated more under the assumption that there is a trained and certified fitness trainer overseeing that workout. On a side note, the Army needs more trained and certified fitness leaders in units regardless. 
-
-If there is not someone who can adequately teach and oversee these types of movement, some good alternate exercises for power to include might be dumbbell clean and presses, dumbbell snatches, kettlebell swings, medicine ball cleans, and the overhead press. 
-
-As of now, there are not a lot of Clean and Jerks and Snatches in the daily programming, but my assumption is that they’ve taken the risk factor into account for this decision. 
-
-Next, my recommendation from the data output is to supplement workouts with Barbell Thrusters, Deadlifts, and the 5k Run. This recommendation actually supports their current programming, because there is a decent amount of each in the tests built into the website. 
-
-Third, a quick study of BMI appears to be that higher performance occurred in what is traditionally known as “Overweight BMI” and closer to that mean, but further study would be needed for this and body fat % would be an essential tool to include in this analysis. 
-
-Lastly, for the CrossFit Athletes out there, to achieve a greater than 50% chance of making it to Quarter Finals, or for it to be more likely than not that you make it, you need average scores above the 58th  percentile across all benchmark stats and if you want a greater than 75% chance of making it, you need average scores above the 71st percentile in all benchmark stats. The good news is that you can track your percentile in each of the exercises by inputted it into the CrossFit Games app (example on the left side of the slide). 
-
-# Future Study and Impact 
-As you can probably guess, I am a huge proponent of the H2F study currently being conducted and am highly optimistic that as buy-in increases and more data is inputted, this will soon lead to more tailored insights for soldiers and leaders. I look forward to conducting some data analysis in my own time on this data in the future. 
-
-As for impact, it gives leaders a comprehensive idea of where their soldiers stand in their physical fitness. I believe this would make the Army less reliant on the ACFT, which people continue to debate whether or not it is a good test of overall fitness, and as this approach builds, dashboards are created, and the idea becomes more mainstream, it allows units to collaboratively learn from other units successes and provide leaders the information they need to maximize their units physical training regimen. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+**Chase Moseley** — Galvanize / Data Science Immersive capstone  
+GitHub: [cdmoseley](https://github.com/cdmoseley)
